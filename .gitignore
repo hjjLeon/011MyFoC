@@ -1,1 +1,15 @@
 *.icf
+*.crf
+*.htm
+*.o
+*.d
+*.map
+*.sct
+*.dep
+*.axf
+*.lst
+*.14228
+*.lnp
+MDK-ARM/JLinkSettings.ini
+MDK-ARM/JLinkLog.txt
+MDK-ARM/011MyFoC/011MyFoC.hex
