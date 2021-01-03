@@ -109,15 +109,15 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   hdma_adc1.XferCpltCallback = adcCompCallback;
-  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adcRawData, 20);
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adcRawData, 5);
   
   pwmPluseRaw[0] = 4199;
   pwmPluseRaw[1] = 4199;
   pwmPluseRaw[2] = 4199;
 
-  HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_1, (uint32_t*)&pwmPluseRaw[0], 1);
-  HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_2, (uint32_t*)&pwmPluseRaw[1], 1);
-  HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_3, (uint32_t*)&pwmPluseRaw[2], 1);
+  while(HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_1, (uint32_t*)&pwmPluseRaw[0], 1) == HAL_BUSY);
+  while(HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_2, (uint32_t*)&pwmPluseRaw[1], 1) == HAL_BUSY);
+  while(HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_3, (uint32_t*)&pwmPluseRaw[2], 1) == HAL_BUSY);
   HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_1);
   HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_2);
   HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_3);
