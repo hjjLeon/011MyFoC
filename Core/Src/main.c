@@ -48,12 +48,13 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+float testTheta = 0, testKp = 0, speed = 0.1;
 //ADC
 extern DMA_HandleTypeDef hdma_adc1;
 uint16_t adcRawData[5] = {0};
 float adcValue[5];
 //TIM
-uint16_t pwmPluseRaw[3] = {4199};
+uint16_t pwmPluseRaw[3] = {4199, 4199, 4199};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -125,8 +126,43 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  float test[3] = {
+    50.0,
+    50.0,
+    50.0,
+  };
+
+  
   while (1)
   {
+    HAL_Delay(1);
+    HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+
+    // if(++test[0] > 100)
+    // {
+    //   test[0] = 0;
+    // }
+    // if(--test[1] < 0)
+    // {
+    //   test[1] = 100;
+    // }
+
+    if(testKp < 60.0)
+      testKp += 0.05;
+    
+    if(speed < 50.0)
+      speed += 0.005;
+    
+    testTheta += speed;
+    if(testTheta >= 360.0)
+    {
+      testTheta = 0.0;
+    }
+
+    svpwmCal(testTheta, testKp, (StPwmDuty_t*)test);
+    for(uint8_t i=0; i < 3; i++)
+      pwmPluseRaw[i] = test[i]*(htim1.Instance->ARR);
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

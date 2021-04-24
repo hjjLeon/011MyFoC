@@ -3,7 +3,7 @@
  * @version: V1.0.0
  * @Author: LeonHe
  * @Date: 2021-01-03 18:55:10
- * @LastEditTime: 2021-01-04 16:37:57
+ * @LastEditTime: 2021-04-25 00:20:21
  */
 #include "svpwm.h"
 #include <math.h>
@@ -29,13 +29,14 @@ void svpwmCal(float theta, float kp, StPwmDuty_t* output)
     }
     else if(kp < 0)
     {
-        k = 0;
+        k = 0.0;
     }
     else
     {
         k = kp;
     }
 	k = k/100.0;
+    k = k*0.8660254;//Umax = Udc * (3^0.5)/2
 	//对电角度求余，并转换弧度
     theta = fmod(theta, 360.0);
     if(theta < 0.0)
